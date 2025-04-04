@@ -116,14 +116,18 @@ begin
             assert w_floor = x"3" report "bad wait on floor3" severity error;
 		--  go up again
 		w_stop <= '0'; wait for k_clk_period;
+		    assert w_floor = x"4" report "bad up from floor3" severity error;
 		-- go back down one floor
 		w_up_down <= '0'; wait for k_clk_period;
+		     assert w_floor = x"3" report "bad down from floor4" severity error;
 		-- go up the rest of the way
 		w_up_down <= '1'; wait for k_clk_period;
+		     assert w_floor = x"4" report "bad all the way up" severity error;
 		-- stop at top
         
         -- go all the way down DOWN (how many clock cycles should that take?)
         w_up_down <= '0'; wait for 4*k_clk_period;
+            assert w_floor = x"1" report "bad all the way down" severity error;
   
 		  	
 		wait; -- wait forever
